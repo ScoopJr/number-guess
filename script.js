@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const guessInput = document.getElementById('guess-input');
     const guessButton = document.getElementById('guess-button');
     const message = document.getElementById('message');
+    const progressBar = document.getElementById('progress-bar');
   
     // Function to start the game
     function startGame() {
@@ -34,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
       showMessage('Enter your guess.', 'black');
       guessInput.value = '';
       guessInput.focus();
+      updateProgressBar(0);
     }
   
     // Function to handle user guesses
@@ -55,8 +57,12 @@ document.addEventListener('DOMContentLoaded', function() {
         guessButton.disabled = true;
       } else if (userGuess < randomNumber) {
         showMessage('Too low! Try again.', 'red');
+        const progressPercentage = (userGuess - minRange) / (randomNumber - minRange) * 100;
+        updateProgressBar(progressPercentage);
       } else {
         showMessage('Too high! Try again.', 'red');
+        const progressPercentage = (maxRange - userGuess) / (maxRange - randomNumber) * 100;
+        updateProgressBar(progressPercentage);
       }
   
       guessInput.value = '';
@@ -67,6 +73,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function showMessage(text, color) {
       message.textContent = text;
       message.style.color = color;
+    }
+  
+    // Function to update the progress bar
+    function updateProgressBar(percentage) {
+      progressBar.style.width = `${percentage}%`;
     }
   
     // Attach event listener to the range button

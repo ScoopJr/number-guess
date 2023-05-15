@@ -1,55 +1,89 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  margin: 0;
-}
-
 .container {
-  background-color: #fff;
-  border-radius: 5px;
-  padding: 20px;
   text-align: center;
+  margin-top: 50px;
 }
 
 h1 {
+  font-size: 36px;
   color: #333;
 }
 
-p {
-  margin-bottom: 10px;
-}
-
-input[type="number"] {
-  padding: 5px;
-  width: 100px;
-  margin-right: 10px;
+input[type="number"], button {
+  margin: 10px;
+  padding: 8px 16px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
 }
 
 button {
-  padding: 5px 15px;
+  cursor: pointer;
   background-color: #333;
   color: #fff;
-  border: none;
-  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
 }
 
 #message {
   margin-top: 20px;
+  font-size: 18px;
 }
 
-.progress-bar {
+#progress-bar {
   height: 20px;
   background-color: #eee;
-  border-radius: 5px;
-  margin-top: 10px;
+  border-radius: 10px;
+  margin-top: 20px;
   overflow: hidden;
 }
 
-.progress-bar-fill {
+#progress-bar-fill {
   height: 100%;
-  background-color: #333;
+  background-color: #ff8c00;
+  transition: width 0.3s ease-in-out;
+}
+
+/* Additional styles for colorful game */
+
+body {
+  background-color: #f2f2f2;
+}
+
+.container {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+input[type="number"], button {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+input[type="number"]::placeholder {
+  color: #888;
+}
+
+button:hover {
+  background-color: #555;
+}
+
+button:disabled {
+  background-color: #ccc;
+}
+
+#message {
+  color: #333;
+}
+
+#progress-bar {
+  background-color: #eee;
+}
+
+#progress-bar-fill {
+  background-color: #ff8c00;
 }
