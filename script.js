@@ -33,6 +33,12 @@ document.addEventListener('DOMContentLoaded', function() {
         showMessage('Please enter a valid range.', 'red');
         return;
       }
+
+        // Check if the range is 9 or greater
+        if (maxRange - minRange < 9) {
+        showMessage('Please enter a range of 10 or greater.', 'red');
+        return;
+        }
   
       // Generate a random number within the range
       randomNumber = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
