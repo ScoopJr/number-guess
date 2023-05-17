@@ -89,7 +89,10 @@ document.addEventListener('DOMContentLoaded', function() {
   
     // Function to calculate the score
     function calculateScore(attempts) {
-      return 10000 / attempts;
+        const range = maxRange - minRange + 1;
+        const maxScore = range * 100;
+        const score = maxScore / attempts;
+        return score;
     }
   
     // Function to display a message
