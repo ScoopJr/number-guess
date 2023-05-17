@@ -20,6 +20,11 @@ document.addEventListener('DOMContentLoaded', function() {
   
     // Function to start the game
     function startGame() {
+      if (playerNameInput.value.trim() === '') {
+        showMessage('Please enter a name.', 'red');
+        return;
+      }
+  
       minRange = parseInt(minInput.value);
       maxRange = parseInt(maxInput.value);
   
@@ -32,7 +37,9 @@ document.addEventListener('DOMContentLoaded', function() {
       // Generate a random number within the range
       randomNumber = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
   
-      // Enable guess input and button
+      // Disable range button and enable guess input and button
+      rangeButton.disabled = true;
+      rangeButton.classList.add('disabled');
       guessInput.disabled = false;
       guessButton.disabled = false;
       guessInput.min = minRange;
@@ -42,25 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
       guessInput.value = '';
       guessInput.focus();
       updateProgressBar(0);
-  
-      // Disable and change style of the start game button
-      rangeButton.disabled = true;
-      rangeButton.classList.add('disabled');
-    }
-  
-    // Function to handle enabling the start game button
-    function handleRangeInput() {
-      const isMinInputFilled = minInput.value !== '';
-      const isMaxInputFilled = maxInput.value !== '';
-  
-      // Enable the start game button when both inputs are filled
-      if (isMinInputFilled && isMaxInputFilled) {
-        rangeButton.disabled = false;
-        rangeButton.classList.remove('disabled');
-      } else {
-        rangeButton.disabled = true;
-        rangeButton.classList.add('disabled');
-      }
     }
   
     // Function to handle user guesses
@@ -78,38 +66,38 @@ document.addEventListener('DOMContentLoaded', function() {
       // Compare the user's guess with the random number
       if (userGuess === randomNumber) {
         score += calculateScore(attempts);
-        showMessage(`CONGRATULATIONS! You guessed the correct number in ${attempts} attempts. Your score is ${Math.round(score)}.`, 'green');
+        showMessage(`Congratulations! You guessed the correct number in ${attempts} attempts. Your score is ${Math.round(score)}.`, 'green');
         guessInput.disabled = true;
         guessButton.disabled = true;
         addScoreToHighScores(score);
         playAgainButton.disabled = false;
         playAgainButton.classList.remove('disabled');
       } else if (userGuess < randomNumber) {
-        showMessage('Too LOW! Try again.', 'red');
+        showMessage('Too low! Try again.', 'red');
         const progressPercentage = (userGuess - minRange) / (randomNumber - minRange) * 100;
         updateProgressBar(progressPercentage);
       } else {
-        showMessage('Too HIGH! Try again.', 'red');
+        showMessage('Too high! Try again.', 'red');
         const progressPercentage = (maxRange - userGuess) / (maxRange - randomNumber) * 100;
         updateProgressBar(progressPercentage);
       }
   
-          guessInput.value = '';
-    guessInput.focus();
-    updateScoreDisplay(Math.round(score));
-  }
-
-  // Function to calculate the score
-  function calculateScore(attempts) {
-    return 10000 / attempts;
-  }
-
-  // Function to display a message
-  function showMessage(text, color) {
-    message.textContent = text;
-    message.style.color = color;
-  }
-
+      guessInput.value = '';
+      guessInput.focus();
+      updateScoreDisplay(Math.round(score));
+    }
+  
+    // Function to calculate the score
+    function calculateScore(attempts) {
+      return 10000 / attempts;
+    }
+  
+    // Function to display a message
+    function showMessage(text, color) {
+      message.textContent = text;
+      message.style.color = color;
+    }
+  
   // Function to update the progress bar
   function updateProgressBar(percentage) {
     progressBar.style.width = `${percentage}%`;
@@ -165,11 +153,10 @@ document.addEventListener('DOMContentLoaded', function() {
     guessButton.disabled = true;
     minInput.value = '';
     maxInput.value = '';
+    playerNameInput.value = '';
     minInput.focus();
   });
-
-  // Attach event listener to the min and max input fields
-  minInput.addEventListener('input', handleRangeInput);
-  maxInput.addEventListener('input', handleRangeInput);
 });
+
+
   
