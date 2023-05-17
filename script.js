@@ -48,8 +48,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleGuess() {
       const userGuess = parseInt(guessInput.value);
   
-    // Check if the user's guess is valid
-    if (isNaN(userGuess) || userGuess < minRange || userGuess > maxRange) {
+      // Check if the user's guess is valid
+      if (isNaN(userGuess) || userGuess < minRange || userGuess > maxRange) {
         showMessage('Please enter a valid number within the range.', 'red');
         return;
       }
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Compare the user's guess with the random number
       if (userGuess === randomNumber) {
         score += calculateScore(attempts);
-        showMessage(`Congratulations! You guessed the correct number in ${attempts} attempts. Your score is ${score}.`, 'green');
+        showMessage(`Congratulations! You guessed the correct number in ${attempts} attempts. Your score is ${Math.round(score)}.`, 'green');
         guessInput.disabled = true;
         guessButton.disabled = true;
         addScoreToHighScores(score);
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
       guessInput.value = '';
       guessInput.focus();
-      updateScoreDisplay(score);
+      updateScoreDisplay(Math.round(score));
     }
   
     // Function to calculate the score
@@ -101,35 +101,34 @@ document.addEventListener('DOMContentLoaded', function() {
   
     // Function to add a score to the high scores array
     function addScoreToHighScores(score) {
-      const playerName = playerNameInput.value.trim();
-      if (!playerName) return;
-      highScores.push({ name: playerName, score: score });
-      highScores.sort((a, b) => b.score - a.score);
-      highScores = highScores.slice(0, 5); // Keep only the top 5 scores
-      updateLeaderboard();
+        const playerName = playerNameInput.value.trim();
+        if (!playerName) return;
+        highScores.push({ name: playerName, score: score });
+        highScores.sort((a, b) => b.score - a.score);
+        highScores = highScores.slice(0, 5); // Keep only the top 5 scores
+        updateLeaderboard();
     }
-  
+
     // Function to update the leaderboard
     function updateLeaderboard() {
-      highScoresList.innerHTML = '';
-      highScores.forEach((score, index) => {
+        highScoresList.innerHTML = '';
+        highScores.forEach((score, index) => {
         const li = document.createElement('li');
-        li.textContent = `${score.name}: ${score.score}`;
+        li.textContent = `${score.name}: ${Math.round(score.score)}`;
         highScoresList.appendChild(li);
-      });
+        });
     }
-  
+
     // Attach event listener to the range button
     rangeButton.addEventListener('click', startGame);
-  
+
     // Attach event listener to the guess button
     guessButton.addEventListener('click', handleGuess);
-  
+
     // Attach event listener to the save score button
     saveButton.addEventListener('click', function() {
-      const score = parseInt(scoreDisplay.textContent.split(': ')[1]);
-      addScoreToHighScores(score);
+        const score = parseInt(scoreDisplay.textContent.split(': ')[1]);
+        addScoreToHighScores(score);
     });
-  });
-  
-  
+    });
+    
