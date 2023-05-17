@@ -99,36 +99,46 @@ document.addEventListener('DOMContentLoaded', function() {
       scoreDisplay.textContent = `Score: ${score}`;
     }
   
-    // Function to add a score to the high scores array
-    function addScoreToHighScores(score) {
-        const playerName = playerNameInput.value.trim();
-        if (!playerName) return;
-        highScores.push({ name: playerName, score: score });
-        highScores.sort((a, b) => b.score - a.score);
-        highScores = highScores.slice(0, 5); // Keep only the top 5 scores
-        updateLeaderboard();
-    }
+  // Function to add a score to the high scores array
+  function addScoreToHighScores(score) {
+    const playerName = playerNameInput.value.trim();
+    if (!playerName) return;
+    highScores.push({ name: playerName, score: score });
+    highScores.sort((a, b) => b.score - a.score);
+    highScores = highScores.slice(0, 5); // Keep only the top 5 scores
+    updateLeaderboard();
+  }
 
-    // Function to update the leaderboard
-    function updateLeaderboard() {
-        highScoresList.innerHTML = '';
-        highScores.forEach((score, index) => {
-        const li = document.createElement('li');
-        li.textContent = `${score.name}: ${Math.round(score.score)}`;
-        highScoresList.appendChild(li);
-        });
-    }
-
-    // Attach event listener to the range button
-    rangeButton.addEventListener('click', startGame);
-
-    // Attach event listener to the guess button
-    guessButton.addEventListener('click', handleGuess);
-
-    // Attach event listener to the save score button
-    saveButton.addEventListener('click', function() {
-        const score = parseInt(scoreDisplay.textContent.split(': ')[1]);
-        addScoreToHighScores(score);
+  // Function to update the leaderboard
+  function updateLeaderboard() {
+    highScoresList.innerHTML = '';
+    highScores.forEach((score, index) => {
+      const rank = index + 1;
+      const tr = document.createElement('tr');
+      const rankTd = document.createElement('td');
+      rankTd.textContent = rank;
+      const nameTd = document.createElement('td');
+      nameTd.textContent = score.name;
+      const scoreTd = document.createElement('td');
+      scoreTd.textContent = Math.round(score.score);
+      tr.appendChild(rankTd);
+      tr.appendChild(nameTd);
+      tr.appendChild(scoreTd);
+      highScoresList.appendChild(tr);
     });
-    });
-    
+  }
+
+  // Attach event listener to the range button
+  rangeButton.addEventListener('click', startGame);
+
+  // Attach event listener to the guess button
+  guessButton.addEventListener('click', handleGuess);
+
+  // Attach event listener to the save score button
+  saveButton.addEventListener('click', function() {
+    const score = parseInt(scoreDisplay.textContent.split(': ')[1]);
+    addScoreToHighScores(score);
+  });
+});
+
+  
