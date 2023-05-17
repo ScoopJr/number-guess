@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const scoreDisplay = document.getElementById('score');
     const highScoresList = document.getElementById('score-list');
     const playerNameInput = document.getElementById('name-input');
-    const saveButton = document.getElementById('save-button');
+    const playAgainButton = document.getElementById('play-again');
   
     // Function to start the game
     function startGame() {
@@ -42,6 +42,25 @@ document.addEventListener('DOMContentLoaded', function() {
       guessInput.value = '';
       guessInput.focus();
       updateProgressBar(0);
+  
+      // Disable and change style of the start game button
+      rangeButton.disabled = true;
+      rangeButton.classList.add('disabled');
+    }
+  
+    // Function to handle enabling the start game button
+    function handleRangeInput() {
+      const isMinInputFilled = minInput.value !== '';
+      const isMaxInputFilled = maxInput.value !== '';
+  
+      // Enable the start game button when both inputs are filled
+      if (isMinInputFilled && isMaxInputFilled) {
+        rangeButton.disabled = false;
+        rangeButton.classList.remove('disabled');
+      } else {
+        rangeButton.disabled = true;
+        rangeButton.classList.add('disabled');
+      }
     }
   
     // Function to handle user guesses
@@ -59,46 +78,48 @@ document.addEventListener('DOMContentLoaded', function() {
       // Compare the user's guess with the random number
       if (userGuess === randomNumber) {
         score += calculateScore(attempts);
-        showMessage(`Congratulations! You guessed the correct number in ${attempts} attempts. Your score is ${Math.round(score)}.`, 'green');
+        showMessage(`CONGRATULATIONS! You guessed the correct number in ${attempts} attempts. Your score is ${Math.round(score)}.`, 'green');
         guessInput.disabled = true;
         guessButton.disabled = true;
         addScoreToHighScores(score);
+        playAgainButton.disabled = false;
+        playAgainButton.classList.remove('disabled');
       } else if (userGuess < randomNumber) {
-        showMessage('Too low! Try again.', 'red');
+        showMessage('Too LOW! Try again.', 'red');
         const progressPercentage = (userGuess - minRange) / (randomNumber - minRange) * 100;
         updateProgressBar(progressPercentage);
       } else {
-        showMessage('Too high! Try again.', 'red');
+        showMessage('Too HIGH! Try again.', 'red');
         const progressPercentage = (maxRange - userGuess) / (maxRange - randomNumber) * 100;
         updateProgressBar(progressPercentage);
       }
   
-      guessInput.value = '';
-      guessInput.focus();
-      updateScoreDisplay(Math.round(score));
-    }
-  
-    // Function to calculate the score
-    function calculateScore(attempts) {
-      return 10000 / attempts;
-    }
-  
-    // Function to display a message
-    function showMessage(text, color) {
-      message.textContent = text;
-      message.style.color = color;
-    }
-  
-    // Function to update the progress bar
-    function updateProgressBar(percentage) {
-      progressBar.style.width = `${percentage}%`;
-    }
-  
-    // Function to update the score display
-    function updateScoreDisplay(score) {
-      scoreDisplay.textContent = `Score: ${score}`;
-    }
-  
+          guessInput.value = '';
+    guessInput.focus();
+    updateScoreDisplay(Math.round(score));
+  }
+
+  // Function to calculate the score
+  function calculateScore(attempts) {
+    return 10000 / attempts;
+  }
+
+  // Function to display a message
+  function showMessage(text, color) {
+    message.textContent = text;
+    message.style.color = color;
+  }
+
+  // Function to update the progress bar
+  function updateProgressBar(percentage) {
+    progressBar.style.width = `${percentage}%`;
+  }
+
+  // Function to update the score display
+  function updateScoreDisplay(score) {
+    scoreDisplay.textContent = `Score: ${score}`;
+  }
+
   // Function to add a score to the high scores array
   function addScoreToHighScores(score) {
     const playerName = playerNameInput.value.trim();
@@ -134,11 +155,21 @@ document.addEventListener('DOMContentLoaded', function() {
   // Attach event listener to the guess button
   guessButton.addEventListener('click', handleGuess);
 
-  // Attach event listener to the save score button
-  saveButton.addEventListener('click', function() {
-    const score = parseInt(scoreDisplay.textContent.split(': ')[1]);
-    addScoreToHighScores(score);
+  // Attach event listener to the play again button
+  playAgainButton.addEventListener('click', function() {
+    playAgainButton.disabled = true;
+    playAgainButton.classList.add('disabled');
+    rangeButton.disabled = false;
+    rangeButton.classList.remove('disabled');
+    guessInput.disabled = true;
+    guessButton.disabled = true;
+    minInput.value = '';
+    maxInput.value = '';
+    minInput.focus();
   });
-});
 
+  // Attach event listener to the min and max input fields
+  minInput.addEventListener('input', handleRangeInput);
+  maxInput.addEventListener('input', handleRangeInput);
+});
   

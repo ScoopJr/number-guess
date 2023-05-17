@@ -8,6 +8,10 @@
 <body>
   <div class="container">
     <h1>Guessing Game</h1>
+    
+    <p>Enter your name for the Leaderboard:</p>
+    <input type="text" id="name-input" placeholder="Your Name">
+
     <p>Enter the range of numbers:</p>
     <input type="number" id="min-input" placeholder="Minimum">
     <input type="number" id="max-input" placeholder="Maximum">
@@ -31,13 +35,14 @@
         </thead>
         <tbody id="score-list">
           <!-- Top scores will be dynamically added here -->
-        </tbody>
+        </tbody>        
       </table>
-      <p>Enter your name to save your score:</p>
-      <input type="text" id="name-input" placeholder="Your Name">
-      <button id="save-button">Save Score</button>
     </div>
     <div id="score">Score: 0</div>
+    <!--<p>Enter your name to save your score:</p>
+    <input type="text" id="name-input" placeholder="Your Name">
+    <button id="save-button">Save Score</button>-->
+    <button id="play-again">Play Again</button>
   </div>
 </body>
 </html>

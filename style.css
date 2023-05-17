@@ -106,7 +106,10 @@ button:disabled {
   margin-top: 20px;
 }
 
-
+.play-again-active {
+  background-color: #FF9933;
+  /* Add other styling properties here */
+}
 
 /*
 .container {
